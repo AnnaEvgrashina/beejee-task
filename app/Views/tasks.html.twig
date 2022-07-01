@@ -1,0 +1,13 @@
+{% extends 'main.html.twig' %}
+{% block main %}
+    <table>
+    {% for task in tasks %}
+        <tr>
+            <td>{{ task.id }}</td>
+            <td>{{ task.user_name }}</td>
+            <td>{{ task.email }}</td>
+            <td>{{ task.task }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}
