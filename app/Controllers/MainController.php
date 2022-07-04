@@ -24,6 +24,7 @@ class MainController
             'newTask' => $request->get('newTask') ?? false,
             'updateTask' => $request->get('updateTask') ?? false,
             'isAdmin' => $request->get('admin') ?? false,
+            'error' => $request->get('error') ?? false,
         ]);
     }
 
