@@ -1,13 +1,72 @@
 {% extends 'main.html.twig' %}
 {% block main %}
-    <table>
-    {% for task in tasks %}
+    <header>
+        <div class="px-3 py-2 border-bottom mb-3">
+            <div class="container d-flex flex-wrap justify-content-center">
+                <div class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto"></div>
+                <div class="text-end">
+                    {% if isAdmin %}<a href="/logout">Logout</a>{% else %}<a href="/login">Login</a>{% endif %}
+                </div>
+            </div>
+        </div>
+    </header>
+    <table id="taskTable">
+        <thead>
         <tr>
-            <td>{{ task.id }}</td>
-            <td>{{ task.user_name }}</td>
-            <td>{{ task.email }}</td>
-            <td>{{ task.task }}</td>
+            <th>Имя пользователя</th>
+            <th>Email</th>
+            <th>Задача</th>
+            <th>Статус</th>
+            {% if isAdmin %}<th>Редактировать</th>{% endif %}
         </tr>
-    {% endfor %}
+        </thead>
+        <tbody>
+        {% for task in tasks %}
+            <tr>
+                <td>{{ task.user_name }}</td>
+                <td>{{ task.email }}</td>
+                <td><span class="text-muted fw-lighter">{% if task.change_task %}(Изменено администратором){% endif %}</span> {{ task.task }}</td>
+                <td>{% if task.status %}Выполнено{% else %}Не выполнено{% endif %}</td>
+                {% if isAdmin %}<td><a class="btn btn-primary" href="/update?id={{ task.id }}">Редактировать</a></td>{% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
     </table>
+    {% if newTask %}
+        <div class="alert alert-success mb-3 mt-3" role="alert">
+            Новая задача успешно добавлена
+        </div>
+    {% endif %}
+    {% if updateTask %}
+        <div class="alert alert-success mb-3 mt-3" role="alert">
+            Задача успешно обновлена
+        </div>
+    {% endif %}
+    <div class="row justify-content-center">
+        <div class="col-5">
+            <h3>Добавить новую задачу</h3>
+            <form class="col-12" action="/create" method="post">
+            <div class="row">
+                <div class="mb-3">
+                    <label for="user_name" class="form-label">User name</label>
+                    <input required id="user_name" name="user_name" type="text" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input  required id="email" name="email" type="email" class="form-control" placeholder="name@example.com">
+                </div>
+                <div class="mb-3">
+                    <label for="task_text" class="form-label">Task text</label>
+                    <textarea required name="task" id="task_text" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script src="public/js/main.js"></script>
 {% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'main.html.twig' %}
+{% block main %}
+    <div class="row">
+        <h3>Изменить задачу</h3>
+        <form class="col-5" action="/updateTask?id={{ task.id }}" method="post">
+            <div class="row">
+                <div class="mb-3">
+                    <label for="user_name" class="form-label">User name</label>
+                    <input disabled id="user_name" name="user_name" value="{{ task.user_name }}" type="text" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input disabled id="email" name="email" value="{{ task.email }}" type="email" class="form-control" placeholder="name@example.com">
+                </div>
+                <div class="mb-3">
+                    <label for="task_text" class="form-label">Task text</label>
+                    <textarea required name="task" id="task_text" class="form-control">{{ task.task }}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="status">Status</label>
+                    <input name="status" class="form-check-input" type="checkbox" id="status" {{ (task.status) ? 'checked' : '' }}>
+                </div>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
