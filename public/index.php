@@ -5,6 +5,10 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $env = new \Symfony\Component\Dotenv\Dotenv(true);
 $env->load(__DIR__ . '/../.env');
 
+if ($_ENV['DEBUG']) {
+    error_reporting(E_ALL);
+}
+
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../app/Views/');
 $twig = new \Twig\Environment($loader);
 
