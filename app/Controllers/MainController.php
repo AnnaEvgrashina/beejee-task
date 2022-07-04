@@ -23,7 +23,7 @@ class MainController
             'tasks' => $tasks,
             'newTask' => $request->get('newTask') ?? false,
             'updateTask' => $request->get('updateTask') ?? false,
-            'isAdmin' => $request->get('admin') ?? false,
+            'isAdmin' => $_COOKIE['admin'] ?? false,
             'error' => $request->get('error') ?? false,
         ]);
     }
@@ -36,7 +36,7 @@ class MainController
 
     public function update(Request $request)
     {
-        if ($request->get('admin')) {
+        if ($_COOKIE['admin']) {
             $task = Task::getById($request->get('id'));
             return $this->view->render('update', [
                 'task' => $task[0],
@@ -48,7 +48,7 @@ class MainController
 
     public function updateTask(Request $request)
     {
-        if ($request->get('admin')) {
+        if ($_COOKIE['admin']) {
             $status = $request->get('status') == 'on' ? 1 : 0;
             $fields = [
                 'task' => $request->get('task'),
