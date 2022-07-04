@@ -41,7 +41,7 @@ class MainController
                 'task' => $task[0],
             ]);
         } else {
-            header('Location: /');
+            header('Location: /?error=true');
         }
     }
 
@@ -58,7 +58,7 @@ class MainController
             Task::update($request->get('id'), $fields);
             header('Location: /?updateTask=true');
         } else {
-            header('Location: /');
+            header('Location: /?error=true');
         }
     }
 
